@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.fatecommerce</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>fatecommerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fatecommerce-rest-api</name>
 	<description>Projeto de ecommerce para a Fatec Jales</description>
@@ -63,6 +63,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
 		</dependency>
 	</dependencies>
 
