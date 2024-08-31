@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fatecommerce.api.entity.Category;
-import br.com.fatecommerce.api.service.CategoryService;
+import br.com.fatecommerce.api.entity.Product;
+import br.com.fatecommerce.api.service.ProductService;
 
 @RestController
-@RequestMapping(value = "/category")
+@RequestMapping(value = "/product")
 @CrossOrigin(value = "*")
-public class CategoryController {
+public class ProductController {
 
     @Autowired
-    private CategoryService categoryService;
+    private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Object> getCategories() {
-        List<Category> find = categoryService.findAll();
+    public ResponseEntity<Object> getProducts() {
+        List<Product> find = productService.findAll();
         if (find.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -37,26 +37,26 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveCategory(@RequestBody Category category) {
-        categoryService.save(category);
+    public ResponseEntity<Object> saveProduct(@RequestBody Product product) {
+        productService.save(product);
         return ResponseEntity.created(null).build();
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> getById(@PathVariable Long id) {
-        Category result = categoryService.findById(id);
+        Product result = productService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable("id") Long id) {
-        HashMap<String, Object> result = categoryService.delete(id);
+    public ResponseEntity<Object> deleteProduct(@PathVariable("id") Long id) {
+        HashMap<String, Object> result = productService.delete(id);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping()
-    public ResponseEntity<Object> updateCategory(@RequestBody Category category) {
-        Category result = categoryService.save(category);
+    public ResponseEntity<Object> updateProduct(@RequestBody Product product) {
+        Product result = productService.save(product);
         return ResponseEntity.ok(result);
     }
 
