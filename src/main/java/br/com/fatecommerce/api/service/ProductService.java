@@ -2,6 +2,7 @@ package br.com.fatecommerce.api.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,22 @@ public class ProductService {
 
     public Product update(Product product) {
         if (product.getId() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found Product!");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
         }
         return this.repository.saveAndFlush(product);
+    }
+
+    public Product findByEan(String ean) {
+        return this.repository.findByEan(ean).orElseThrow(() -> new NoSuchElementException(
+                String.format("Produto não econtrado para o ean informado (%s)", ean)));
+    }
+
+    public List<Product> findBySku(String sku) {
+        List<Product> find = this.repository.findByIgnoreCaseSkuContainingOrderByNameAsc(sku);
+        if (find.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Produto não econtrado para o ean informado (%s)", sku));
+        return find;
     }
 
 }

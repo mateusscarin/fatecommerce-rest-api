@@ -60,4 +60,15 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping(value = "/ean/{ean}")
+    public ResponseEntity<Object> getByEan(@PathVariable String ean) {
+        Product result = productService.findByEan(ean);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(value = "/sku/{sku}")
+    public ResponseEntity<Object> getBySku(@PathVariable String sku) {
+        List<Product> result = productService.findBySku(sku);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }

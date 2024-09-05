@@ -43,10 +43,12 @@ public class Product {
     @Column(length = 1000)
     private String description;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, length = 10)
+    @NotBlank(message = "O sku não pode ser vazio!")
     private String sku;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, unique = true, length = 15)
+    @NotBlank(message = "O ean não pode ser vazio!")
     private String ean;
 
     @Column(name = "cost_price", nullable = false, precision = 15, scale = 2)
