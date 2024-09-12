@@ -1,5 +1,6 @@
 package br.com.fatecommerce.api.service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -59,10 +60,33 @@ public class ProductService {
     }
 
     public List<Product> findBySku(String sku) {
+        List<Product> find = this.repository.findBySku(sku);
+        if (find.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Produtos não econtrado para o sku informado (%s)", sku));
+        return find;
+    }
+
+    public List<Product> findByIgnoreCaseSkuContainingOrderByNameAsc(String sku) {
         List<Product> find = this.repository.findByIgnoreCaseSkuContainingOrderByNameAsc(sku);
         if (find.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Produto não econtrado para o ean informado (%s)", sku));
+                    String.format("Produtos não econtrado para o sku informado (%s)", sku));
+        return find;
+    }
+
+    public List<Product> findByPublishedIsTrueOrderByDateCreatedDesc() {
+        List<Product> find = this.repository.findByPublishedIsTrueOrderByDateCreatedDesc();
+        if (find.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produtos publicados não econtrados");
+        return find;
+    }
+
+    public List<Product> findByDateCreated(LocalDate dateReference) {
+        List<Product> find = this.repository.findByDateCreated(dateReference);
+        if (find.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Produtos não econtrado para a data de referência informada (%s)", dateReference));
         return find;
     }
 

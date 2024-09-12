@@ -1,5 +1,6 @@
 package br.com.fatecommerce.api.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,6 +70,18 @@ public class ProductController {
     @GetMapping(value = "/sku/{sku}")
     public ResponseEntity<Object> getBySku(@PathVariable String sku) {
         List<Product> result = productService.findBySku(sku);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(value = "/ignore-case/sku/{sku}")
+    public ResponseEntity<Object> getByfindByIgnoreCaseSkuContainingOrderByNameAsc(@PathVariable String sku) {
+        List<Product> result = productService.findByIgnoreCaseSkuContainingOrderByNameAsc(sku);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(value = "/date-reference/{dateReference}")
+    public ResponseEntity<Object> getByDateCreated(@PathVariable LocalDate dateReference) {
+        List<Product> result = productService.findByDateCreated(dateReference);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }
